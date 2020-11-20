@@ -26,13 +26,18 @@ public class IdmController {
             response.put("idmValueSecond", "381");
         }
 
+        try{
+            Thread.sleep(5000);
+        } catch(InterruptedException e) {
+
+        }
         return response;
     }
 
     private Boolean checkFailure() {
         Random random = new Random();
         int value = random.nextInt(100);
-        if(value%9 == 0) {
+        if(value%11 == 0) {
             return true;
         }
         return false;
