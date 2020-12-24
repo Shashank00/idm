@@ -1,43 +1,39 @@
 package com.axis.idm.controllers;
 
-import com.axis.idm.model.IdmRequest;
+import reactor.core.publisher.Mono;
+import com.axis.idm.response.IdmResponse;
+import com.axis.idm.exception.IdmException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @RestController
 public class IdmController {
 
-    @RequestMapping(value= "/idmPost", method = RequestMethod.POST)
-    public Map<String, String> getIdmResponse(@RequestBody IdmRequest request) throws Exception {
-        Map<String, String> response = new HashMap<>();
+    @RequestMapping(value = "/idmPost", method = RequestMethod.POST)
+    public Mono<Object> getIdmResponse(@RequestBody String request) throws IdmException {
 
-        if(checkFailure() || request == null) {
-            throw new Exception();
-        }
-        else {
-            response.put("status", "Approved");
-            response.put("idmValueFirst", "256");
-            response.put("idmValueSecond", "381");
-        }
+        if (checkFailure() || request == null) {
+            throw new IdmException("Internal Server Error", "Internal Server Error in Idm");
+        } else {
+            try {
+                Thread.sleep(5000);
+                IdmResponse response = new IdmResponse("Idm Success", "200", "1000");
+                return Mono.just(response);
+            } catch (InterruptedException e) {
 
-        try{
-            Thread.sleep(5000);
-        } catch(InterruptedException e) {
-
+            }
         }
-        return response;
+        return Mono.empty();
     }
 
     private Boolean checkFailure() {
         Random random = new Random();
         int value = random.nextInt(100);
-        if(value%11 == 0) {
+        if (value % 1 == 0) {
             return true;
         }
         return false;
