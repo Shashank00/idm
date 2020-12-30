@@ -1,5 +1,8 @@
 package com.axis.idm.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IdmResponse {
     private String status;
     private String idmValueFirst;

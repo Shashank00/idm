@@ -14,7 +14,7 @@ import java.util.Random;
 public class IdmController {
 
     @RequestMapping(value = "/idmPost", method = RequestMethod.POST)
-    public Mono<Object> getIdmResponse(@RequestBody String request) throws IdmException {
+    public Mono<? extends Object> getIdmResponse(@RequestBody String request) throws IdmException {
 
         if (checkFailure() || request == null) {
             throw new IdmException("Internal Server Error", "Internal Server Error in Idm");
@@ -22,7 +22,7 @@ public class IdmController {
             try {
                 Thread.sleep(5000);
                 IdmResponse response = new IdmResponse("Idm Success", "200", "1000");
-                return Mono.just(response);
+                return Mono.just(response.toString()).log();
             } catch (InterruptedException e) {
 
             }
@@ -33,7 +33,7 @@ public class IdmController {
     private Boolean checkFailure() {
         Random random = new Random();
         int value = random.nextInt(100);
-        if (value % 1 == 0) {
+        if (value % 11 == 0) {
             return true;
         }
         return false;
