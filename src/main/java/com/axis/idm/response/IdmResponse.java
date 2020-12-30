@@ -1,11 +1,15 @@
 package com.axis.idm.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IdmResponse {
+    @JsonProperty("status")
     private String status;
+    @JsonProperty("idmValueFirst")
     private String idmValueFirst;
+    @JsonProperty("idmValueSecond")
     private String idmValueSecond;
 
 

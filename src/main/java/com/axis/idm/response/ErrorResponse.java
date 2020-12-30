@@ -19,5 +19,4 @@ public class ErrorResponse {
                 ", message='" + message + '\'' +
                 '}';
     }
-
 }
